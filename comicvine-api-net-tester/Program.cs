@@ -1,4 +1,6 @@
 ﻿using Thoorium.Comicvine.Api;
+using Thoorium.Comicvine.Enums;
+using Thoorium.Comicvine.Objects;
 
 namespace comicvine_api_net_tester
 {
@@ -7,8 +9,17 @@ namespace comicvine_api_net_tester
         private static void Main(string[] args)
         {
             var comic = new Comicvine("");//Put your api key here
-            var character = comic.GetCharacter("4005-1468");//DOOM
-            var i = comic.GetIssue("4000-487843");//Secret Wars 2015 #1
+
+            var charactersearchfieldlist = new SearchFieldList
+            {
+                CharacterFields = CharacterFields.API_DETAIL_URL
+            };
+
+            var search = comic.Search("Doom", charactersearchfieldlist, RessourceType.CHARACTER);
+            var charapiid = search.Results.Characters[0].GetCharacterApiId();
+
+            var character = comic.GetCharacter(charapiid);//DOOM
+            var issue = comic.GetIssue("4000-487843");//Secret Wars 2015 #1
         }
     }
 }

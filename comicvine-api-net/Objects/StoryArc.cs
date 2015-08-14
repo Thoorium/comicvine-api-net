@@ -1,5 +1,7 @@
 ﻿using RestSharp.Deserializers;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Thoorium.Comicvine.Objects
 {
@@ -46,5 +48,13 @@ namespace Thoorium.Comicvine.Objects
 
         [DeserializeAs(Name = "site_detail_url")]
         public string SiteDetailUrl { get; set; }
+
+        public string GetStoryArcApiId()
+        {
+            if (string.IsNullOrWhiteSpace(this.ApiDetailUrl))
+                return this.ApiDetailUrl;
+
+            return this.ApiDetailUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last();
+        }
     }
 }

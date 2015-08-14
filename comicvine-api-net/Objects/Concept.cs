@@ -1,5 +1,7 @@
 ﻿using RestSharp.Deserializers;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Thoorium.Comicvine.Objects
 {
@@ -42,5 +44,13 @@ namespace Thoorium.Comicvine.Objects
 
         [DeserializeAs(Name = "volume_credits")]
         public List<Volume> VolumeCredits { get; set; }
+
+        public string GetConceptApiId()
+        {
+            if (string.IsNullOrWhiteSpace(this.ApiDetailUrl))
+                return this.ApiDetailUrl;
+
+            return this.ApiDetailUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last();
+        }
     }
 }

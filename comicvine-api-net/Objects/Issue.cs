@@ -1,5 +1,7 @@
 ﻿using RestSharp.Deserializers;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Thoorium.Comicvine.Objects
 {
@@ -97,6 +99,16 @@ namespace Thoorium.Comicvine.Objects
                 return this.ApiDetailUrl;
 
             return this.ApiDetailUrl.ToLowerInvariant().Replace("/first_appeared_in_issue/", "/issue/");
+        }
+
+        public string GetIssueApiId()
+        {
+            string _ApiDetailUrl = GetCorrectApiDetailUrl();
+
+            if (string.IsNullOrWhiteSpace(_ApiDetailUrl))
+                return _ApiDetailUrl;
+
+            return _ApiDetailUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last();
         }
     }
 }
